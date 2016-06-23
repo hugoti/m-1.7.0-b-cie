@@ -1,0 +1,112 @@
+<style type="text/css">
+
+#popup{
+	position: absolute;
+	top: 39%;
+	left: 26%;
+	width: 700px;
+	height: 550px;
+	padding: 10px 10px 10px 10px;
+	border-width: 2px;
+	border-style: solid;
+	background: #ffffff;
+	}
+	
+</style> 
+<script type="text/javascript">
+// Função que bloqueia a abertura da div na chamada da página e fecha a pop-up ao clicar no link fechar //
+function fechar()
+{
+	document.getElementById('popup').style.display = 'none';
+}
+// Função que abre a pop-up //
+function abrir()
+{
+	document.getElementById('popup').style.display = 'block';
+}
+
+</script> 
+
+<div class="page-title">
+    <h1><?php echo $this->__('Your order has been received') ?></h1>
+</div>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<h2 class="sub-title"><?php echo $this->__('Thank you for your purchase!') ?></h2>
+
+
+<!-- Resposta da Cielo -->
+<p>
+<? 
+$order_id = $this->getOrderId();
+$_order = Mage::getModel('Sales/Order'); 
+$_order->loadByIncrementId($order_id);   
+?>  
+<?php
+
+if ($_order->getPayment()->getMethod() == 'cielo') : 
+	if ($_order->getPayment()->getCcStatus() == 3 || $_order->getPayment()->getCcStatus() == 5 || $_order->getPayment()->getCcStatus() == 8 ) : 
+		switch($_order->getPayment()->getCcStatus()) {
+		  case 3:
+			$mensagem = "Pagamento não autenticado"; break;
+		  case 5:
+			$mensagem = "Pagamento não autorizado"; break;
+		  case 8:
+			$mensagem = "Pagamento não pode ser debitado"; break;
+		}
+		//Deu Merda
+?>
+		<div class="cielo-fail">
+			O seu Pedido não pode ser processado e foi <b>cancelado</b>, entre em contato conosco para solucionar o problema.
+			<br/>Mensagem de erro: <b><?=$mensagem;?></b>
+		</div>
+	<?php
+	
+	elseif ($_order->getPayment()->getCcStatus() == 9): 
+		//Foi capturada:
+	?>
+		<div class="cielo-fail">Seu pedido foi cancelado com sucesso.</div>
+	<?php
+	
+	elseif ($_order->getPayment()->getCcStatus() == 6): 
+		//Foi capturada:
+	?>
+	<div class="cielo-sussess">Pagamento realizado com sucesso, dentre em breve nossa equipe entrará em contato para finalizar a compra.</div>
+	<?php else: ?>
+		<div class="cielo-sussess">Seu pagamento foi recebido e está em fase de processamento, aguarde contato de nossa equipe.</div>
+	<? endif;
+endif;
+
+?>
+
+<?php if ($this->getOrderId()): ?>
+<?php if ($this->getCanViewOrder()) :?>
+    <p><?php echo $this->__('Your order # is: %s.', sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getViewOrderUrl()), $this->escapeHtml($this->getOrderId()))) ?></p>
+<?php  else :?>
+    <p><?php echo $this->__('Your order # is: %s.', $this->escapeHtml($this->getOrderId())) ?></p>
+<?php endif;?>
+    <p><?php echo $this->__('You will receive an order confirmation email with details of your order and a link to track its progress.') ?></p>
+<?php if ($this->getCanViewOrder() && $this->getCanPrintOrder()) :?>
+    <p>
+        <?php echo $this->__('Click <a href="%s" onclick="this.target=\'_blank\'">here to print</a> a copy of your order confirmation.', $this->getPrintUrl()) ?>
+        <?php echo $this->getChildHtml() ?>
+    </p>
+<?php endif;?>
+<?php endif;?>
+
+<?php if ($this->getAgreementRefId()): ?>
+    <p><?php echo $this->__('Your billing agreement # is: %s.', sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getAgreementUrl()), $this->escapeHtml($this->getAgreementRefId())))?></p>
+<?php endif;?>
+
+<?php if ($profiles = $this->getRecurringProfiles()):?>
+<p><?php echo $this->__('Your recurring payment profiles:'); ?></p>
+<ul class="disc">
+<?php foreach($profiles as $profile):?>
+<?php $profileIdHtml = ($this->getCanViewProfiles() ? sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getProfileUrl($profile)), $this->escapeHtml($this->getObjectData($profile, 'reference_id'))) : $this->escapeHtml($this->getObjectData($profile, 'reference_id')));?>
+    <li><?php echo $this->__('Payment profile # %s: "%s".', $profileIdHtml, $this->escapeHtml($this->getObjectData($profile, 'schedule_description')))?></li>
+<?php endforeach;?>
+</ul>
+<?php endif;?>
+
+<div class="buttons-set">
+    <button type="button" class="button" title="<?php echo $this->__('Continue Shopping') ?>" onclick="window.location='<?php echo $this->getUrl() ?>'"><span><span><?php echo $this->__('Continue Shopping') ?></span></span></button>
+</div>

@@ -1,0 +1,33 @@
+<?php 
+
+$_code=$this->getMethodCode();
+?>
+<fieldset class="form-list">
+<ul id='payment_form_<?php echo $this->getMethodCode(); ?>' style='display:none'>
+ <li><?php echo $this->__('Após concluir seu pedido, você informará os dados do cartão.') ?></li>
+ <div>
+    <label for="cielo-cartao"><span class="required">*</span><?php echo $this->__('Selecione a seguir a forma de pagamento desejada:') ?></label>
+      <input type="hidden" name="payment[cc_type]" id="cielo-cartao" title="<?php echo $this->__('Selecione uma forma de pagamento!') ?>" />
+      <br/><br clear="all"/>
+      <script>
+	function alterarFormaPagamento(valor) {
+	  document.getElementById('cielo-cartao').value = valor;
+	}
+      </script>
+      <?php $_ccType = $this->getInfoData('cc_type') ?>
+      <?php $_ccParcela = $this->getInfoData('cc_ss_issue') ?>
+	<?php foreach ($this->getCcAvailableTypes() as $_typeCode): ?>
+	  <div id="cielo-<?php echo $_typeCode['codigo'] ?>" class="cielo-parcela" style="float:left;width:200px;margin-bottom: 20px;">
+	    <img src="<? echo $this->getSkinUrl('images/bandeiras/'.$_typeCode['codigo'].'.jpg') ?>" title="<?php echo $_typeCode['nome'] ?>"/><br/>
+	    <b><?php echo $_typeCode["nome"] ?></b>	
+	    <ul>
+	      <?php foreach ($_typeCode["parcela"] as $parcela => $_typeName): ?>
+		<li><input type="radio" id="cielo-<?php echo $_typeCode['codigo'] ?>-<?php echo $parcela ?>" name="payment[cc_ss_issue]" value="<?php echo $parcela ?>" onclick="alterarFormaPagamento('<?php echo $_typeCode['codigo'] ?>')"/> <label style="float:none;" for="cielo-<?php echo $_typeCode['codigo'] ?>-<?php echo $parcela ?>"><?php echo $_typeName ?></label></li>
+	      <?php endforeach ?>
+	    </ul>
+	  </div>	
+	<?php endforeach ?>
+	<input type="radio" id="cielo-none" name="payment[cc_ss_issue]" value="1" class="input-text validate-one-required-by-name" disabled="true" style="position: absolute;left: -1000px;"/>
+ </div>
+</ul>
+</fieldset>

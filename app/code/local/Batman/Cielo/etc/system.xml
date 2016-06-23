@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<config>
+ <sections>
+	  <payment>
+		  <groups>
+			  <cielo translate="label" module="paygate">
+				  <label>Cartão de Crédito Cielo</label>
+				  <sort_order>670</sort_order>
+				  <show_in_default>1</show_in_default>
+				  <show_in_website>1</show_in_website>
+				  <show_in_store>0</show_in_store>
+				  <fields>
+					  <active translate="label">
+						  <label>Enabled</label>
+						  <frontend_type>select</frontend_type>
+						  <source_model>adminhtml/system_config_source_yesno</source_model>
+						  <sort_order>10</sort_order>
+						  <show_in_default>1</show_in_default>
+						  <show_in_website>1</show_in_website>
+						  <show_in_store>0</show_in_store>
+					  </active>
+					  <title translate="label">
+						  <label>Title</label>
+						  <frontend_type>text</frontend_type>
+						  <sort_order>20</sort_order>
+						  <show_in_default>1</show_in_default>
+						  <show_in_website>1</show_in_website>
+						  <show_in_store>0</show_in_store>
+					  </title>
+					  <cctypes translate="label">
+						    <label>Credit Card Types</label>
+						    <frontend_type>multiselect</frontend_type>
+						    <source_model>Cielo_Bandeiras</source_model>
+						    <sort_order>60</sort_order>
+						    <show_in_default>1</show_in_default>
+						    <show_in_website>1</show_in_website>
+						    <show_in_store>0</show_in_store>
+						    <can_be_empty>1</can_be_empty>
+						</cctypes>
+					<shop_code translate="label">
+					    <label>Número de Afiliação</label>
+					    <frontend_type>text</frontend_type>
+					    <sort_order>40</sort_order>
+					    <show_in_default>1</show_in_default>
+					    <show_in_website>1</show_in_website>
+					    <show_in_store>0</show_in_store>
+					</shop_code>
+					<shop_autentication_key translate="label">
+					    <label>Chave de Acesso</label>
+					    <frontend_type>text</frontend_type>
+					    <sort_order>50</sort_order>
+					    <show_in_default>1</show_in_default>
+					    <show_in_website>1</show_in_website>
+					    <show_in_store>0</show_in_store>
+					</shop_autentication_key>
+					<environment translate="label">
+					    <label>Ambiente</label>
+					    <frontend_type>select</frontend_type>
+					    <source_model>Cielo_Environment</source_model>
+					    <sort_order>51</sort_order>
+					    <show_in_default>1</show_in_default>
+					    <show_in_website>1</show_in_website>
+					    <show_in_store>0</show_in_store>
+					</environment>
+					<paymentsaccepted translate="label">
+					    <label>Number of payments accepted</label>
+					    <frontend_type>multiselect</frontend_type>
+					    <source_model>Cielo_Paymentsaccepted</source_model>
+					    <sort_order>60</sort_order>
+					    <show_in_default>1</show_in_default>
+					    <show_in_website>1</show_in_website>
+					    <show_in_store>0</show_in_store>
+					    <can_be_empty>1</can_be_empty>
+					</paymentsaccepted>
+					<subdivision translate="label">
+                            <label>Entidade que fará o parcelamento</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>Cielo_Subdivision</source_model>
+                            <sort_order>61</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </subdivision>
+						<confirm translate="label">
+						    <label>Capturar Automaticamente?</label>
+						    <frontend_type>select</frontend_type>
+						    <source_model>adminhtml/system_config_source_yesno</source_model>
+						    <sort_order>70</sort_order>
+						    <show_in_default>1</show_in_default>
+						    <show_in_website>1</show_in_website>
+						    <show_in_store>0</show_in_store>
+						</confirm>
+						<alterar_status_pagamento translate="label">
+						    <label>Alterar o status do pagamento automaticamente?</label>
+						    <frontend_type>select</frontend_type>
+						    <source_model>adminhtml/system_config_source_yesno</source_model>
+						    <sort_order>75</sort_order>
+						    <show_in_default>1</show_in_default>
+						    <show_in_website>1</show_in_website>
+						    <show_in_store>0</show_in_store>
+						</alterar_status_pagamento>
+						<!--
+						Hoje o módulo não processa os dados na loja.
+						<fill translate="label">
+						    <label>Processar os dados dentro de sua loja?</label>
+						    <frontend_type>select</frontend_type>
+						    <source_model>adminhtml/system_config_source_yesno</source_model>
+						    <sort_order>80</sort_order>
+						    <show_in_default>1</show_in_default>
+						    <show_in_website>1</show_in_website>
+						    <show_in_store>0</show_in_store>
+						</fill>
+						-->
+						<order_status translate="label">
+						  <label>Status do pedido</label>
+						  <frontend_type>select</frontend_type>
+						  <source_model>adminhtml/system_config_source_order_status_newProcessing</source_model>
+						  <sort_order>100</sort_order>
+						  <show_in_default>1</show_in_default>
+						  <show_in_website>1</show_in_website>
+						  <show_in_store>0</show_in_store>
+					  </order_status>
+					  
+				  </fields>
+			  </cielo>
+		  </groups>
+	  </payment>
+  </sections>
+</config>
