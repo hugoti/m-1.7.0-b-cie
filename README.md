@@ -1,6 +1,6 @@
-# Cielo module for Magento 1.6 to 1.9.2.4
+# Cielo module for Magento 1.6.2.0 to 1.9.2.4
 
-Payment module for magento Cielo 1.6.2 until version 1.9.2.4
+Payment module for magento Cielo 1.6.2.0 until version 1.9.2.4
 
 #### Installation
 
